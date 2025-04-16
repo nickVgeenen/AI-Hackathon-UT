@@ -1,28 +1,37 @@
 import { NavLink } from 'react-router-dom';
 
-import logo from '../assets/brugbotLogo.png';
+import logo from '../assets/logo.png';
 import iconAI from '../assets/icons8-ai-90.png';
-import iconBridge from '../assets/icons8-bridge-90.png';
 import iconChatbot from '../assets/icons8-chatbot-90.png';
 
 export default function Navbar() {
   const navItems = [
+    
     {
-      to: "/assistantsettings",
-      icon: iconAI,
-      title: "AI chatbot instellen",
-      details: ["Mijn Klas", "Methode", "Thema", "Taken"],
-    },
-    {
-      to: "/transitioninterface",
-      icon: iconBridge,
-      title: "Bruggetje instellen",
-      details: ["Vorige leeractiviteit", "Bruggetje", "Volgende leeractiviteit"],
-    },
-    {
-      to: "/studentinterface",
+      to: "/step1",
       icon: iconChatbot,
-      title: "Chatbot voorbeeld",
+      title: "Slag 1",
+      details: ["Hoe is het gegaan?"],
+    },
+    
+    {
+      to: "/step2",
+      icon: iconChatbot,
+      title: "Slag 2",
+      details: ["Doen we het goed?"],
+    },
+    
+    {
+      to: "/step3",
+      icon: iconChatbot,
+      title: "Slag 3",
+      details: ["Wat betekent dit voor mij?"],
+    },
+
+    {
+      to: "/uitreksel",
+      icon: iconAI,
+      title: "Reflectieverslag",
       details: [],
     },
   ];
@@ -30,14 +39,15 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <ul>
-        {/* Home Logo */}
+         
         <li>
-          <NavLink to="/transitioninterface">
+          <NavLink to="/studentinterface">
             <div>
               <img src={logo} alt="logo" className="nav-logo" />
             </div>
           </NavLink>
         </li>
+        
 
         {/* Navigation Items */}
         {navItems.map((item, index) => (

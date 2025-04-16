@@ -19,7 +19,7 @@ function ChatBot() {
       direction: "incoming",
     },
   ]);
-  const [suggestions, setSuggestions] = useState([]); // Store AI-generated suggestions
+  //const [suggestions, setSuggestions] = useState([]); // Store AI-generated suggestions
   
   const [settings, setSettings] = useState({});
   const hasRun = useRef(false);
@@ -43,7 +43,9 @@ function ChatBot() {
   }, []);
 
   useEffect(() => {
-    if (Object.keys(settings).length > 0) {
+    console.log("SETTINGS CHECK:", settings, Object.keys(settings).length);
+    //if (Object.keys(settings).length > 0) {
+    if (true) {
       const fetchInitialMessage = async () => {
         try {
           const apiRequestBody = {
@@ -51,7 +53,8 @@ function ChatBot() {
             model: "gpt-4o-mini",
             messages: [
               { role: "system", content: UpdateSystemPrompt() },
-              { role: "user", content: "Hallo, Wat moeten we nu doen?" },
+              //{ role: "user", content: "Hallo, Wat moeten we nu doen?" },
+              { role: "user", content: "Vraag me zonder extra tekst 'Vond je dat je goed hebt gehandeld?'"},
             ],
           };
 
@@ -75,7 +78,7 @@ function ChatBot() {
             },
           ]);
 
-          fetchSuggestions(data.choices[0].message.content); // Fetch suggestions after initial message for -> (message)
+          //fetchSuggestions(data.choices[0].message.content); // Fetch suggestions after initial message for -> (message)
         } catch (error) {
           console.error("Error fetching initial message:", error);
           setMessages([
@@ -86,7 +89,6 @@ function ChatBot() {
           ]);
         }
       };
-
       fetchInitialMessage();
 
     }
@@ -101,15 +103,17 @@ function ChatBot() {
 
   const UpdateSystemPrompt = () => {
     let designerSettings =
-      "Jouw naam is BrugBot. Gedraag je als een vriendelijke, creatieve en betrouwbare chatbot met het doel om leerlingen op Nederlandse basisscholen te helpen met de overschakeling van een leer activiteit naar een volgende leer activiteit door het maken van een bruggetje. Gebruik emojis. Je geeft de leerling instructies om hen efficient te laten starten aan de volgende leer activiteit. De docent van de leerlingen is ook aanwezig en je werkt samen met hen om de leerlingen te helpen. De docent heeft je wat informatie gegeven over de leerlingen en jouw gewenste aanpak: ";
+    "Je bent Holli. Je helpt een pabostudent bij het verdiepen van reflectie over een eerder besproken praktijksituatie. Deze fase heet Persoonlijke Analyse: Wat dacht je? Wat voelde je? Wat geloof je hierover? Toon altijd begrip. Reflectie kost tijd. Geef ruimte voor aarzeling of twijfel. Wees bewust van culturele en persoonlijke verschillen in beleving en uiting. Gebruik deze samenvatting als input: [samenvatting van Prompt1] Begin met: Wat deed deze situatie met jou? Wat dacht of voelde je toen? Vervolgvragen (voor verdieping en verbinding met theorie): Welke overtuiging zat onder jouw reactie? Herken je hierin iets uit je opleiding of theorie? Hoe kijk je nu terug op je handelen? Bij vastlopen: Soms helpt het om je af te vragen: waarom deed ik dit zo? Of: wat zou een collega hebben gedacht in die situatie? Differentiatie per studiejaar: Vroege fase: help gevoelens te benoemen (‘Was je gespannen?’). Latere fase: onderzoek verbanden met pedagogiek/didactiek (‘Welke visie speelde hier mee?’). Let op culturele sensitiviteit: Stel vragen open, zonder aannames over achtergrond, normen of context. Respecteer de diversiteit van scholen en leerlingen. Let op signalen dat de student mogelijk klaar is met deze fase. Dit herken je aan zinnen zoals (of vergelijkbaar met): ‘Dat is eigenlijk alles wat ik erover kan zeggen.’ ‘Ik denk dat ik het zo wel heb verteld.’ ‘Ik weet niet wat ik er nog meer over moet zeggen.’Dat was het wel, denk ik.’Zoals ik al zei…’Ik heb dit al eerder verteld…’ Als je dit soort uitspraken herkent, stel dan de volgende overgangsvraag: ‘Wil je nog iets toevoegen, of is dit voor jou rond? Zullen we verder naar het volgende deel van de reflectie?’ Afronding: Maak altijd een samenvatting van het gesprek. Zeg daarna:  Wil je verder reflecteren klik dan op stap 2. Wil je het gesprek afronden? Klink dan op afronden. ";    
+    const summary = localStorage.getItem("summaryStep1") || "";
+    //const assistantSetting = localStorage.getItem("assistantSetting") || ""; //details over alle 4 de vragen
 
+    //const transitionSetting = localStorage.getItem("transitionSetting") || ""; //'Ga van x naar y'
 
-    const assistantSetting = localStorage.getItem("assistantSetting") || ""; //details over alle 4 de vragen
+    //console.log(designerSettings + " ... " + assistantSetting + " ... " + transitionSetting);
+    console.log(designerSettings);
+    //return designerSettings + assistantSetting + transitionSetting;
+    return designerSettings;
 
-    const transitionSetting = localStorage.getItem("transitionSetting") || ""; //'Ga van x naar y'
-
-    console.log(designerSettings + " ... " + assistantSetting + " ... " + transitionSetting);
-    return designerSettings + assistantSetting + transitionSetting;
   };
 
   const handleSend = async (message) => {
@@ -131,6 +135,7 @@ function ChatBot() {
     await processMessageToChatGPT(newMessages);
   };
 
+  /*
   const fetchSuggestions = async (message) => {
     const transitionSetting = localStorage.getItem("transitionSetting").split("."); //get the first part of the transition settings
     
@@ -154,9 +159,9 @@ function ChatBot() {
       });
       const data = await response.json();
 
-      const generatedSuggestions = data.choices[0].message.content.split("\n");
+      //const generatedSuggestions = data.choices[0].message.content.split("\n");
 
-      //alert(s2); // shows "oobar"
+      
       for (var i = 0; i < generatedSuggestions.length; i++) {
         generatedSuggestions[i] = generatedSuggestions[i].substring(3);
     }
@@ -165,7 +170,10 @@ function ChatBot() {
     } catch (error) {
       console.error("Error fetching suggestions:", error);
     }
+    
   };
+  */
+  
 
   const processMessageToChatGPT = async (chatMessages) => {
     let apiMessages = chatMessages.map((messageObject) => ({
@@ -198,19 +206,19 @@ function ChatBot() {
         ]);
         setTyping(false);
 
-        fetchSuggestions(data.choices[0].message.content); // Fetch new suggestions after receiving a reply
+        //suggestion fetchSuggestions(data.choices[0].message.content); // Fetch new suggestions after receiving a reply
       });
   };
 
   return (
     <>
-      <h2 className="pageTitle">Chatbot voorbeeld</h2>
+      <h2 className="pageTitle">Reflecteren met het 3-slag model</h2>
       <MainContainer className="customMainContainer">
         <ChatContainer className="customChatContainer">
           <MessageList
             scrollBehavior="smooth"
             typingIndicator={
-              typing ? <TypingIndicator content="ChatGPT is typing..." /> : null
+              typing ? <TypingIndicator content="Holli is aan het nadenken..." /> : null
             }
           >
             {messages.map((message, i) => (
@@ -222,21 +230,24 @@ function ChatBot() {
           </MessageList>
 
           <MessageInput
-            placeholder="Geef antwoord op de chatbot..."
+            placeholder="Geef antwoord op Holli..."
             onSend={handleSend}
           />
           
         </ChatContainer>
       </MainContainer>
+      {/* suggestion
       <div className="suggestionsContainer">
       <Suggestions ClassName="suggestions" suggestions={suggestions} onSelect={handleSend} />
       </div>
+      */}
             
 
     </>
   );
 }
 
+//disabled function suggestion
 function Suggestions({ suggestions, onSelect }) {
   return (
     <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
