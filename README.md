@@ -1,8 +1,8 @@
-# React + Vite
+# How to run the project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The project uses React + Vite
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Install and open a code editor (Visual Studio Code is recommended: https://code.visualstudio.com/)
+- Install Node.JS (https://nodejs.org/en/download)
+- Open the terminal in Visual Studio Code (Terminal > New Terminal) and run 'npm run dev'. This should get you a link to open the file locally (e.g. http://localhost:5173)
+- If this doesn't work you can provide ChatGPT some information about the project and copy+paste the error message.
